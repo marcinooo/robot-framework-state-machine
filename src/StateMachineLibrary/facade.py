@@ -48,7 +48,7 @@ class StateMachineFacade(object):
 
     def update_context(self, sm: str, item: dict):
         sm_instance = self._get_state_machine_or_raise_error(sm)
-        dict_merge(sm_instance.context, item)
+        sm_instance.context = dict_merge(sm_instance.context, item)
 
     def _get_state_machine_or_raise_error(self, sm: str):
         state_machine = self._store.get(sm)

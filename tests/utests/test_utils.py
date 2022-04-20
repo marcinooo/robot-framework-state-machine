@@ -3,7 +3,7 @@ import sys
 import pytest
 
 test_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(test_dir, '..', 'src'))
+sys.path.append(os.path.join(test_dir, '..', '..', 'src'))
 
 from StateMachineLibrary.utils import dict_merge
 
