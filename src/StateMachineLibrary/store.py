@@ -2,9 +2,7 @@ from .state_machine import StateMachine
 
 
 class StateMachineStore(object):
-
     _STORE = {}
-
     _instance = None
 
     def __new__(cls, *args, **kwargs):

@@ -18,11 +18,11 @@ class StateMachineLibrary(object):
     def update_state(self, sm: str) -> None:
         self._facade.update_state(sm)
 
-    def get_context(self, sm: str):
+    def get_context(self, sm: str) -> dict:
         return self._facade.get_context(sm)
 
-    def set_context(self, sm: str, context):
+    def set_context(self, sm: str, context: dict) -> None:
         self._facade.set_context(sm, context)
 
-    def update_context(self, sm: str, item: dict):
+    def update_context(self, sm: str, item: dict) -> None:
         self._facade.update_context(sm, item)

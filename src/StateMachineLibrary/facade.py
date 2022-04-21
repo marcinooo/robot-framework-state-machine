@@ -2,7 +2,7 @@ from robot.api import logger
 
 from .store import StateMachineStore
 from .state_machine import StateMachine, State
-from .utils import is_string, get_keword, build_callback, dict_merge
+from .utils import is_string, get_keword, build_callback, dict_merge, keyword_should_exist
 from .exceptions import StateMachineNotFoundError
 
 
@@ -17,12 +17,14 @@ class StateMachineFacade(object):
         if not is_string(name):
             raise RuntimeError('Name of state machine must be a string.')
         if self._store.get(name) is not None:
-            logger.warn('State machine named {} has been overwritten'.format(sm))
-        sm = StateMachine(name)
+            logger.warn('State machine named {} has been overwritten'.format(name))
+        sm = StateMachine()
         self._store.add(name, sm)
 
     def add_state(self, state: str, on_update: str, sm: str) -> None:
         sm_instance = self._get_state_machine_or_raise_error(sm)
+        keyword_should_exist(state)
+        keyword_should_exist(on_update)
         state_keyword = get_keword(state)
         on_update_keyword = get_keword(on_update)
         run_callback = build_callback(state_keyword)
@@ -38,19 +40,19 @@ class StateMachineFacade(object):
         sm_instance = self._get_state_machine_or_raise_error(sm)
         sm_instance.update()
 
-    def get_context(self, sm: str):
+    def get_context(self, sm: str) -> dict:
         sm_instance = self._get_state_machine_or_raise_error(sm)
         return sm_instance.context
 
-    def set_context(self, sm: str, context):
+    def set_context(self, sm: str, context: dict) -> None:
         sm_instance = self._get_state_machine_or_raise_error(sm)
         sm_instance.context = context
 
-    def update_context(self, sm: str, item: dict):
+    def update_context(self, sm: str, item: dict) -> None:
         sm_instance = self._get_state_machine_or_raise_error(sm)
         sm_instance.context = dict_merge(sm_instance.context, item)
 
-    def _get_state_machine_or_raise_error(self, sm: str):
+    def _get_state_machine_or_raise_error(self, sm: str) -> StateMachine:
         state_machine = self._store.get(sm)
         if state_machine is None:
             raise StateMachineNotFoundError(self.missing_state_machine_message.format(sm))
