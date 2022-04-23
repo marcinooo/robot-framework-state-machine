@@ -12,16 +12,16 @@ def sm_name():
 def state_machine(func):
     def inner(*args, **kwargs):
         sm = StateMachineLibrary()
-        func(sm)
+        func(sm, *args, **kwargs)
     return inner
 
 
 @state_machine
 def prepare_report_setup(sm):
     sm.create_state_machine(sm_name())
-    sm.add_state(get_battery_voltage.__name__, on_update_get_battery_voltage.__name__, sm_name())
-    sm.add_state(get_time_of_running.__name__, on_update_get_time_of_running.__name__, sm_name())
-    sm.add_state(show_report.__name__, on_update_show_report.__name__, sm_name())
+    sm.add_state('Get Battery Voltage', 'On Update Get Battery Voltage', sm_name())
+    sm.add_state('Get Time Of Running', 'On Update Get Time Of Running', sm_name())
+    sm.add_state('Show Report', 'On Update Show Report', sm_name())
 
 
 def get_battery_voltage():
@@ -34,7 +34,7 @@ def get_battery_voltage():
 
 @state_machine
 def on_update_get_battery_voltage(sm):
-    sm.go_to_state(get_time_of_running.__name__, sm_name())
+    sm.go_to_state('Get Time Of Running', sm_name())
 
 
 def get_time_of_running():
@@ -47,7 +47,7 @@ def get_time_of_running():
 
 @state_machine
 def on_update_get_time_of_running(sm):
-    sm.go_to_state(show_report.__name__, sm_name())
+    sm.go_to_state('Show Report', sm_name())
 
 
 def show_report():
