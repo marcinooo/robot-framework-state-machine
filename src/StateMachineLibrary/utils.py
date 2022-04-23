@@ -33,6 +33,10 @@ def is_string(item: object) -> bool:
     return isinstance(item, str)
 
 
+def is_dictionary(item: dict) -> bool:
+    return isinstance(item, dict)
+
+
 def build_callback(keyword: Keyword) -> Callable:
     def callback():
         context = get_robot_context()
