@@ -33,7 +33,7 @@ def is_string(item: object) -> bool:
     return isinstance(item, str)
 
 
-def is_dictionary(item: dict) -> bool:
+def is_dictionary(item: object) -> bool:
     return isinstance(item, dict)
 
 
@@ -45,9 +45,9 @@ def build_callback(keyword: Keyword) -> Callable:
 
 
 def dict_merge(a: dict, b: dict) -> dict:
-    if not isinstance(a, dict):
+    if not is_dictionary(a):
         raise ValueError("Argument 'a' should be a dictionary")
-    if not isinstance(b, dict):
+    if not is_dictionary(b):
         return b 
     result = copy.deepcopy(a)
     for k, v in b.items():

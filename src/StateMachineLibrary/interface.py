@@ -6,7 +6,7 @@ class StateMachineLibrary(object):
     def __init__(self) -> None:
         self._facade = StateMachineFacade()
 
-    def create_state_machine(self, name: str) -> None:
+    def create_state_machine(self, name) -> None:
         """
         Creates state machine object. State machine can control flow in your test or task definition.
         Example of flow:
@@ -17,7 +17,7 @@ class StateMachineLibrary(object):
         """
         self._facade.create_state_machine(name)
 
-    def add_state(self, run: str, on_update: str, sm: str) -> None:  # dodaj sprawdzanie czy state nie zawier go to...
+    def add_state(self, run, on_update, sm) -> None:  # dodaj sprawdzanie czy state nie zawier go to...
         """
         Adds single state to state machine. To creates state you have to define state keyword
         which contains main code of state to execute. In addition you have to define a method that contains
@@ -29,7 +29,7 @@ class StateMachineLibrary(object):
         """
         self._facade.add_state(run, on_update, sm)
 
-    def go_to_state(self, state: str, sm: str) -> None:
+    def go_to_state(self, state, sm) -> None:
         """
         Jumps to specified state. State is identified by name of main keyword.
 
@@ -42,7 +42,7 @@ class StateMachineLibrary(object):
         """
         self._facade.go_to_state(state, sm)
 
-    def update_state(self, sm: str) -> None:
+    def update_state(self, sm) -> None:
         """
         Goes to next state. It calls keyword with transition logic to the next state and main keyword from next state.
         Next state is indicated in keyword with transition logic for current state.
@@ -88,3 +88,11 @@ class StateMachineLibrary(object):
         :return: None
         """
         self._facade.update_context(sm, item)
+
+    def destroy_state_machine(self, name) -> None:
+        """
+        Destroys state machine object.
+        :param name: name of created state machine
+        :return: None
+        """
+        self._facade.destroy_state_machine(name)
