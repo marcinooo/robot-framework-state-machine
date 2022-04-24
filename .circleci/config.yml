@@ -15,7 +15,7 @@ jobs:
           command: pytest tests/utests
       - run:
           name: Run atests
-          command: robot tests/atests
+          command: robot -P src -L DEBUG tests/atests
 workflows:
   test:
     jobs:
