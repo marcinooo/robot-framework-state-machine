@@ -1,9 +1,13 @@
+"""
+Contains implementation of state machine with required utils.
+"""
+
 from typing import Callable
 from .exceptions import StateNotFoundError
 from .utils import log_state_machine_states
 
 
-class State(object):
+class State:
     """Creates state with required callbacks."""
     def __init__(self, name: str, run_callback: Callable, on_update_callback: Callable) -> None:
         self.name = name
@@ -19,13 +23,13 @@ class State(object):
         self.on_update_callback()
 
 
-class StateMachine(object):
+class StateMachine:
     """Creates state machine."""
     def __init__(self, name: str) -> None:
         self.name = name
         self.current_state = None
         self.states = {}
-        self.context = dict()
+        self.context = {}
 
     def add_state(self, state: State) -> None:
         """

@@ -1,7 +1,11 @@
+"""
+Contains implementation of store to collect all state machines.
+"""
+
 from .state_machine import StateMachine
 
 
-class StateMachineStore(object):
+class StateMachineStore:
     """Stores all state machines."""
     _STORE = {}
     _instance = None
@@ -19,7 +23,7 @@ class StateMachineStore(object):
         :return: None
         """
         self._STORE[name] = sm
-    
+
     def get(self, name: str) -> StateMachine:
         """
         Returns state machine which is in store.

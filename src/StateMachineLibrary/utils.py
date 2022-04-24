@@ -1,3 +1,7 @@
+"""
+Contains different utils for whole package.
+"""
+
 import copy
 from typing import Callable
 from robot.api import logger
@@ -84,7 +88,7 @@ def dict_merge(a: dict, b: dict) -> dict:
     if not is_dictionary(a):
         raise ValueError("Argument 'a' should be a dictionary")
     if not is_dictionary(b):
-        return b 
+        return b
     result = copy.deepcopy(a)
     for k, v in b.items():
         if k in result and isinstance(result[k], dict):
