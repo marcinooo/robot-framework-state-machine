@@ -5,7 +5,7 @@ Library interface.
 from .facade import StateMachineFacade
 
 
-class StateMachineLibrary(object):
+class StateMachineLibrary:
     """Interface provides only necessary methods for robot framework."""
 
     def __init__(self) -> None:
