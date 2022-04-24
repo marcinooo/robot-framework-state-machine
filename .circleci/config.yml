@@ -9,8 +9,7 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-          app-dir: ~/requirements/
-          pip-dependency-file: dev.txt
+          pip-dependency-file: requirements/dev.txt
       - run:
           name: Run utests
           command: pytest tests/utests
