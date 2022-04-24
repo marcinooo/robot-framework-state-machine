@@ -5,6 +5,8 @@ State Machine for Robot Framework
 .. image:: https://circleci.com/gh/marcinooo/robot-framework-state-machine.svg?style=svg
     :target: https://circleci.com/gh/marcinooo/robot-framework-state-machine
 
+|
+
 :Author: marcinooo
 :Tags: Robot Framework, Python, State Machine, Library
 
