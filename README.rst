@@ -58,11 +58,13 @@ Usage
 Installation
 ============
 
-`$ pip install git+https://github.com/marcinooo/robot-framework-state-machine/tree/main`
+Install from github:
+
+`$ pip install git+https://github.com/marcinooo/robot-framework-state-machine`
 
 License
 =======
 
 license_ (MIT)
 
-.. _license: https://github.com/martinwac/air_purifier/blob/master/LICENSE.txt
+.. _license: https://github.com/marcinooo/robot-framework-state-machine/blob/main/LICENSE.txt
