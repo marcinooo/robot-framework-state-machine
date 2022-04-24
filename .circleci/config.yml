@@ -1,0 +1,23 @@
+version: 2.1
+orbs:
+  python: circleci/python@1.5.0
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          app-dir: ~/requirements/
+          pip-dependency-file: dev.txt
+      - run:
+          name: Run utests
+          command: pytest tests/utests
+      - run:
+          name: Run atests
+          command: robot tests/atests
+workflows:
+  test:
+    jobs:
+      - build-and-test
