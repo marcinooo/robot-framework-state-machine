@@ -17,7 +17,7 @@ class StateMachineLibrary(object):
         """
         self._facade.create_state_machine(name)
 
-    def add_state(self, run, on_update, sm) -> None:  # dodaj sprawdzanie czy state nie zawier go to...
+    def add_state(self, run, on_update, sm) -> None:
         """
         Adds single state to state machine. To creates state you have to define state keyword
         which contains main code of state to execute. In addition you have to define a method that contains
@@ -69,7 +69,7 @@ class StateMachineLibrary(object):
         """
         self._facade.set_context(sm, context)
 
-    def update_context(self, sm: str, item: dict) -> None:  # dodac zwracanie kontekstu
+    def update_context(self, sm: str, item: dict) -> None:
         """
         Updates context for given state machine. It merges passed dictionary item with existing context.
         Example:
