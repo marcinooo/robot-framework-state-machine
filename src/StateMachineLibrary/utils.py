@@ -9,10 +9,20 @@ from robot.running.usererrorhandler import UserErrorHandler
 
 
 def get_keword(name: str) -> Keyword:
+    """
+    Returns Keyword object for given name.
+    :param name: name of keyword
+    :return: found keyword
+    """
     return Keyword(name)
 
 
-def get_robot_context(top: bool = False):
+def get_robot_context(top: bool = False) -> EXECUTION_CONTEXTS:
+    """
+    Returns current robot context or raises RobotNotRunningError error.
+    :param top: top context will be returned if it is True
+    :return: robot context
+    """
     ctx = EXECUTION_CONTEXTS.current if not top else EXECUTION_CONTEXTS.top
     if ctx is None:
         raise RobotNotRunningError('Cannot access execution context')
@@ -20,6 +30,11 @@ def get_robot_context(top: bool = False):
 
 
 def keyword_should_exist(name: str) -> None:
+    """
+    Checks if keyword was defined.
+    :param name: name of keyword
+    :return: None
+    """
     ctx = get_robot_context()
     try:
         runner = ctx.namespace.get_runner(name)
@@ -30,14 +45,29 @@ def keyword_should_exist(name: str) -> None:
 
 
 def is_string(item: object) -> bool:
+    """
+    Checks if passed argument is a string object
+    :param item: item for verify
+    :return: Ture if item is string, otherwise False
+    """
     return isinstance(item, str)
 
 
 def is_dictionary(item: object) -> bool:
+    """
+    Checks if passed argument is a dictionary object
+    :param item: item for verify
+    :return: Ture if item is dictionary, otherwise False
+    """
     return isinstance(item, dict)
 
 
 def build_callback(keyword: Keyword) -> Callable:
+    """
+    Return function callback for state_machine.State class.
+    :param keyword: keyword which 'run' method will be executed in callback
+    :return: callback function
+    """
     def callback():
         context = get_robot_context()
         keyword.run(context)
@@ -45,6 +75,12 @@ def build_callback(keyword: Keyword) -> Callable:
 
 
 def dict_merge(a: dict, b: dict) -> dict:
+    """
+    Merges second dictionary to first. It does not modify any of dictionaries.
+    :param a: first dictionary
+    :param b: second dictionary
+    :return: merged dictionary
+    """
     if not is_dictionary(a):
         raise ValueError("Argument 'a' should be a dictionary")
     if not is_dictionary(b):
@@ -59,4 +95,9 @@ def dict_merge(a: dict, b: dict) -> dict:
 
 
 def log_state_machine_states(sm) -> None:
+    """
+    Logs all created state machines.
+    :param sm: State machine instnace
+    :return: None
+    """
     logger.debug('States added to state machine:\n' + ',\n'.join(sm.states.keys()))
