@@ -2,6 +2,8 @@
 State Machine for Robot Framework
 =================================
 
+.. image:: https://circleci.com/gh/marcinooo/robot-framework-state-machine.svg?style=svg
+    :target: https://circleci.com/gh/marcinooo/robot-framework-state-machine
 
 :Author: marcinooo
 :Tags: Robot Framework, Python, State Machine, Library
@@ -11,7 +13,6 @@ State Machine for Robot Framework
    Implementation of state machine in robot framework.
 
 .. contents ::
-
 
 Description
 ===========
