@@ -11,6 +11,9 @@ jobs:
           pkg-manager: pip
           pip-dependency-file: requirements/dev.txt
       - run:
+          name: Run pylint
+          command: pylint src
+      - run:
           name: Run utests
           command: pytest tests/utests
       - run:

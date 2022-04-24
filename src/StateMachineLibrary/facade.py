@@ -1,3 +1,7 @@
+"""
+Library facade.
+"""
+
 from robot.api import logger
 
 from .store import StateMachineStore
@@ -6,8 +10,8 @@ from .utils import is_string, is_dictionary, get_keword, build_callback, dict_me
 from .exceptions import StateMachineNotFoundError
 
 
-class StateMachineFacade(object):
-    """Provides api to create and manage state machine."""
+class StateMachineFacade:
+    """Facade provides api to create and manage state machine."""
 
     def __init__(self) -> None:
         self._store = StateMachineStore()

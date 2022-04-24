@@ -1,3 +1,7 @@
+"""
+StateMachineLibrary is robot framework library to create state machine.
+"""
+
 from .interface import StateMachineLibrary
 
 __author__ = "marcinooo"
