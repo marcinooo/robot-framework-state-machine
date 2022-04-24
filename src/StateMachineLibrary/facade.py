@@ -26,25 +26,25 @@ class StateMachineFacade:
         self._store.add(name, sm)
         logger.debug("State machine with name '{}' was created.".format(name))
 
-    def add_state(self, run: str, on_update: str, sm: str) -> None:
+    def add_state(self, state: str, on_update: str, sm: str) -> None:
         """Adds single state to state machine."""
-        if not is_string(run):
-            raise RuntimeError('Run parameter should be name of keyword with main state procedure.')
+        if not is_string(state):
+            raise RuntimeError('State parameter should be name of keyword with main state procedure.')
         if not is_string(on_update):
             raise RuntimeError('On update parameter should be name of keyword with transition procedure.')
         if not is_string(sm):
             raise RuntimeError('Name of state machine must be a string.')
         sm_instance = self._get_state_machine_or_raise_error(sm)
-        keyword_should_exist(run)
+        keyword_should_exist(state)
         keyword_should_exist(on_update)
-        state_keyword = get_keword(run)
+        state_keyword = get_keword(state)
         on_update_keyword = get_keword(on_update)
         run_callback = build_callback(state_keyword)
         on_update_callback = build_callback(on_update_keyword)
-        state = State(name=run, run_callback=run_callback, on_update_callback=on_update_callback)
-        sm_instance.add_state(state)
+        state_instance = State(name=state, run_callback=run_callback, on_update_callback=on_update_callback)
+        sm_instance.add_state(state_instance)
         logger.debug("State with '{}' run keyword "
-                     "and '{}' update keyword was add to '{}' state machine.".format(run, on_update, sm))
+                     "and '{}' update keyword was add to '{}' state machine.".format(state, on_update, sm))
 
     def go_to_state(self, state: str, sm: str) -> None:
         """Jumps to specified state."""

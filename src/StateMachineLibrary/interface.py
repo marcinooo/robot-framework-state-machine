@@ -22,17 +22,17 @@ class StateMachineLibrary:
         """
         self._facade.create_state_machine(name)
 
-    def add_state(self, run, on_update, sm) -> None:
+    def add_state(self, state, on_update, sm) -> None:
         """
         Adds single state to state machine. To creates state you have to define state keyword
         which contains main code of state to execute. In addition you have to define a method that contains
         the transition logic to the next state.
-        :param run: name of keyword with main state logic
+        :param state: name of keyword with main state logic
         :param on_update: name of keyword with transition logic to the next state
         :param sm: name of state machine
         :return: None
         """
-        self._facade.add_state(run, on_update, sm)
+        self._facade.add_state(state, on_update, sm)
 
     def go_to_state(self, state, sm) -> None:
         """

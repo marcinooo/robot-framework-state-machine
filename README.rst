@@ -34,7 +34,7 @@ Usage
     Blink
         [setup]  Task Setup
         Go To State  state=Turn On Light  sm=blink-machine
-        Repeat Keyword	100 times  Update State  sm=blink-machine
+        Repeat Keyword  100 times  Update State  sm=blink-machine
 
     *** Keywords ***
     Task Setup
@@ -44,12 +44,14 @@ Usage
 
     Turn On Light
         Log To Console  Turn On Light...
+    #    Sleep    0.5s    # if you have real led then you need this ;)
 
     On Update Turn On Light
         Go To State  state=Turn Off Light  sm=blink-machine
 
     Turn Off Light
         Log To Console  Turn Off Light...
+    #    Sleep    0.5s    # if you have real led then you need this ;)
 
     On Update Turn Off Light
         Go To State  state=Turn On Light   sm=blink-machine
