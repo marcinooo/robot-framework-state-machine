@@ -10,10 +10,10 @@ def read(rel_path: str) -> str:
 
 def get_version(rel_path: str) -> str:
     for line in read(rel_path).splitlines():
-        if line.startswith("__version__"):
+        if line.startswith('__version__'):
             delim = '"' if '"' in line else "'"
             return line.split(delim)[1]
-    raise RuntimeError("Unable to find version string.")
+    raise RuntimeError('Unable to find version string.')
 
 
 setup(
@@ -21,11 +21,14 @@ setup(
     version=get_version('src/StateMachineLibrary/__init__.py'),
     description='Robot Framework State Machine Library',
     author='Marcin Wachacki',
-    license="MIT",
-    package_dir={"": "src"},
+    license='MIT',
+    package_dir={'': 'src'},
     packages=find_packages(
-        where="src",
-        exclude=["tests*"],
+        where='src',
+        exclude=['tests*'],
     ),
+    install_requires=[
+        'robotframework'
+    ],
     py_modules=['StateMachineLibrary'],
 )

@@ -9,14 +9,13 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-          app-dir: ~/requirements/
-          pip-dependency-file: dev.txt
+          pip-dependency-file: requirements/dev.txt
       - run:
           name: Run utests
           command: pytest tests/utests
       - run:
           name: Run atests
-          command: robot tests/atests
+          command: robot -P src -L DEBUG tests/atests
 workflows:
   test:
     jobs:
