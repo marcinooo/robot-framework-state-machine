@@ -20,6 +20,7 @@ setup(
     name='robotframework-statemachinelibrary',
     version=get_version('src/StateMachineLibrary/__init__.py'),
     description='Robot Framework State Machine Library',
+    long_description=read('README.rst'),
     author='Marcin Wachacki',
     license='MIT',
     url='https://github.com/marcinooo/robot-framework-state-machine/tree/main',
