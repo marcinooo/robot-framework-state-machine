@@ -22,6 +22,58 @@ Description
 Library contains implementation of state machine
 to control or test software components which can be in many states.
 
+|
+
+It is a very simple library, so the documentation is included here. 
+For the inquisitive, I recommend reading the docstrings in `file <https://github.com/marcinooo/robot-framework-state-machine/blob/develop/src/StateMachineLibrary/interface.py>`_.
+
+First of all import the library:
+
+.. code:: robotframework
+
+    Library  StateMachineLibrary
+
+Create a state machine:
+
+.. code:: robotframework
+
+    Create State Machine  name=blink-machine
+
+You can create as many as you want. Each engine should have a unique name.
+
+Register in the machine the keyword that should be executed in the given state (*Turn On Light*) and during its update (*On Update Turn On Light*):
+
+.. code:: robotframework
+
+    Add State  state=Turn On Light   on_update=On Update Turn On Light   sm=blink-machine
+
+Both keywords must be defined:
+
+.. code:: robotframework
+
+    *** Keywords ***
+    # ...
+    Turn On Light
+        # ...
+
+    On Update Turn On Light
+        Go To State  state=Turn Off Light  sm=blink-machine
+
+Keywords *On Update...* should indicate the next state:
+
+.. code:: robotframework
+
+    Go To State  state=Turn Off Light  sm=blink-machine
+
+Call the same kewyord to enter the first state.
+
+Force transition to a new state:
+
+.. code:: robotframework
+
+    Update State  sm=blink-machine
+
+
 Usage
 =====
 
@@ -71,7 +123,7 @@ Installation
 
 Install from github:
 
-`$ pip install git+https://github.com/marcinooo/robot-framework-state-machine`
+``$ pip install git+https://github.com/marcinooo/robot-framework-state-machine``
 
 License
 =======
