@@ -35,7 +35,7 @@ Test Create And Destroy State Machine
     ...    Destroy State Machine    name=${fake_list}
 
 
-Add State to State Machine
+Test Add State to State Machine
     [Setup]    Create State Machine    name=test-machine
     Add State    state=Fake State    on_update=On Update Fake State    sm=test-machine
 
@@ -94,6 +94,28 @@ Test Update State
     [Teardown]    Destroy State Machine    name=test-machine
 
 
+Test Context
+    [Setup]    Run Keywords
+    ...    Create State Machine    name=test-machine    AND
+    ...    Add State    state=Fake State With Context Update    
+    ...                 on_update=On Update Fake State With Context Update    sm=test-machine
+
+    &{context}=    Get Context  sm=test-machine
+    Run Keyword if    ${context} != &{EMPTY}    Fail    Context should be empty before adding any data.
+
+    Go To State    state=Fake State With Context Update    sm=test-machine
+    Update State    sm=test-machine
+
+    &{context}=    Get Context  sm=test-machine
+    Run Keyword if    '${context["fake_data"]}' != 'fake_data'    Fail    Context should contain added data.
+
+    &{new_context}=    Create Dictionary    a=a    b=b    c=c
+    Set Context    sm=test-machine    context=${new_context}
+
+    &{context}=    Get Context  sm=test-machine
+    Run Keyword if    ${context} != &{new_context}    Fail    Context was not overwritten.
+
+
 *** Keywords ***
 Fake State
     No Operation
@@ -107,3 +129,10 @@ Fake State To Set Variable
 On Update Fake State To Set Variable
     Set Test Variable    ${on_update_keyword_success}    ${True}
     Go To State    state=Fake State To Set Variable    sm=test-machine
+
+Fake State With Context Update
+    &{context_chunk}=    Create Dictionary    fake_data=fake_data
+    Update Context    sm=test-machine    item=${context_chunk}
+
+On Update Fake State With Context Update
+    No Operation
