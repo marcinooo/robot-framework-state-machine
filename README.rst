@@ -25,12 +25,14 @@ to control or test software components which can be in many states.
 Usage
 =====
 
+An example of using the library for LED blinking (of course, the library was created based on complex tasks :wink:).
+
 .. code:: robotframework
 
     *** Settings ***
     Library  StateMachineLibrary
 
-    *** Test Case ***
+    *** Tasks ***
     Blink
         [setup]  Task Setup
         Go To State  state=Turn On Light  sm=blink-machine
@@ -55,6 +57,11 @@ Usage
 
     On Update Turn Off Light
         Go To State  state=Turn On Light   sm=blink-machine
+
+
+Flow diagram:
+
+![](states_flow.png =886x398)
 
 
 Installation
