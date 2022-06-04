@@ -22,10 +22,11 @@ Description
 Library contains implementation of state machine
 to control or test software components which can be in many states.
 
-|
+Documentation
+-------------
 
 It is a very simple library, so the documentation is included here. 
-For the inquisitive, I recommend reading the docstrings in `file <https://github.com/marcinooo/robot-framework-state-machine/blob/develop/src/StateMachineLibrary/interface.py>`_.
+For the inquisitive I recommend reading the docstrings in `file <https://github.com/marcinooo/robot-framework-state-machine/blob/develop/src/StateMachineLibrary/interface.py>`_.
 
 First of all import the library:
 
@@ -39,9 +40,9 @@ Create a state machine:
 
     Create State Machine  name=blink-machine
 
-You can create as many as you want. Each engine should have a unique name.
+You can create as many as you want state machines. Each state machine should have a unique name.
 
-Register in the machine the keyword that should be executed in the given state (*Turn On Light*) and during its update (*On Update Turn On Light*):
+Register keywords that should be executed in the given state (*Turn On Light*) and during its update (*On Update Turn On Light*):
 
 .. code:: robotframework
 
@@ -72,6 +73,22 @@ Force transition to a new state:
 .. code:: robotframework
 
     Update State  sm=blink-machine
+
+You can pass data between states in **context** (recommended method) or using global variables.
+
+.. code:: robotframework
+
+    *** Keywords ***
+    # ...
+    Turn On Light
+        # ...
+        &{context_chunk}=    Create Dictionary    led_status=ON
+        Update Context    sm=blink-machine    item=${context_chunk}
+
+    Turn Off Light
+        # ...
+        &{context}=    Get Context  sm=blink-machine
+        Log To Console    LED is ${context["led_status"]}
 
 
 Usage
