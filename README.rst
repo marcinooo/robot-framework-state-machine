@@ -62,7 +62,7 @@ An example of using the library for LED blinking (of course, the library was cre
 Flow diagram:
 
 .. image:: states_flow.png
-    :width: 600
+    :width: 760
     :alt: Flow diagram for above code
 
 
