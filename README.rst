@@ -25,7 +25,7 @@ to control or test software components which can be in many states.
 Usage
 =====
 
-An example of using the library for LED blinking (of course, the library was created based on complex tasks :wink:).
+An example of using the library for LED blinking (of course, the library was created for more complex tasks :wink:).
 
 .. code:: robotframework
 
