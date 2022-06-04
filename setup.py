@@ -22,6 +22,7 @@ setup(
     description='Robot Framework State Machine Library',
     author='Marcin Wachacki',
     license='MIT',
+    url='https://github.com/marcinooo/robot-framework-state-machine/tree/main',
     package_dir={'': 'src'},
     packages=find_packages(
         where='src',
