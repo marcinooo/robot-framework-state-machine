@@ -130,13 +130,17 @@ An example of using the library for LED blinking (of course, the library was cre
 
 Flow diagram:
 
-.. image:: states_flow.png
+.. image:: https://raw.githubusercontent.com/marcinooo/robot-framework-state-machine/main/states_flow.png
     :width: 760
     :alt: Flow diagram for above code
 
 
 Installation
 ============
+
+Install from PyPI:
+
+``$ pip install robotframework-statemachinelibrary``
 
 Install from github:
 
