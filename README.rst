@@ -61,7 +61,9 @@ An example of using the library for LED blinking (of course, the library was cre
 
 Flow diagram:
 
-![](https://raw.githubusercontent.com/marcinooo/robot-framework-state-machine/a71d425003a1d207347063c143062d058127df2a/states_flow.png =886x398)
+.. image:: states_flow.png
+    :width: 600
+    :alt: Flow diagram for above code
 
 
 Installation
