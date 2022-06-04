@@ -2,9 +2,9 @@ version: 2.1
 orbs:
   python: circleci/python@1.5.0
 jobs:
-  build-and-test:
+  build-and-test-py36:  &build-and-test-template
     docker:
-      - image: cimg/python:3.10.2
+      - image: cimg/python:3.6
     steps:
       - checkout
       - python/install-packages:
@@ -19,6 +19,22 @@ jobs:
       - run:
           name: Run atests
           command: robot -P src -L DEBUG tests/atests
+  build-and-test-py37:
+    <<: *build-and-test-template
+    docker:
+      - image: cimg/python:3.7
+  build-and-test-py38:
+    <<: *build-and-test-template
+    docker:
+      - image: cimg/python:3.8
+  build-and-test-py39:
+    <<: *build-and-test-template
+    docker:
+      - image: cimg/python:3.9
+  build-and-test-py310:
+    <<: *build-and-test-template
+    docker:
+      - image: cimg/python:3.10
 workflows:
   test:
     jobs:
