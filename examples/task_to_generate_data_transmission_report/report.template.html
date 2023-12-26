@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Data Transmission Report</title>
+  <style>
+    .section {
+      margin-bottom: 20px;
+    }
+    td, th {
+      border: 1px solid #000000;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="section">
+    <h1>Data transmission report</h1>
+    <p>Report generated on: {{ report_generated_on }}<br/>Data collected on: {{ data_collected_on }}</p>
+  </div>
+  <div class="section">
+    <h2>Test line</h2>
+    {{ test_line_info }}
+  </div>
+  <div class="section">
+    <h2>Charts</h2>
+    <canvas id="throughput-chart" style="width:100%; max-width:800px; margin-bottom: 20px;"></canvas>
+    <canvas id="temperature-chart" style="width:100%; max-width:800px"></canvas>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script>
+    const timestampValues = {{ timestampValues }};
+    const throughputValues = {{ throughputValues }};
+    const temperatureValues = {{ temperatureValues }};
+
+    new Chart("throughput-chart", {
+      type: "line",
+      data: {
+        labels: timestampValues,
+        datasets: [{
+          label: "throughput in Mbps",
+          data: throughputValues,
+          borderColor: "blue",
+          fill: false
+        }]
+      },
+      options: {
+        legend: { display: true },
+        title: { display: true, text: "Throughput" }
+      }
+    });
+
+    new Chart("temperature-chart", {
+      type: "line",
+      data: {
+        labels: timestampValues,
+        datasets: [{
+          label: "temperature in °C",
+          data: temperatureValues,
+          borderColor: "orange",
+          fill: false
+        }]
+      },
+      options: {
+        legend: { display: true },
+        title: { display: true, text: "Temperature" }
+      }
+    });
+  </script>
+
+</body>
+
+</html>

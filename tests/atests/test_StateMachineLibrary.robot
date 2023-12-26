@@ -4,135 +4,102 @@ Library  StateMachineLibrary
 
 
 *** Variables ***
-@{fake_list}=    Create List    a    b    c
-${error_invalid_state_machine_name}=    Name of state machine must be a string.
-${error_invalid_run_keyword_name}=    State parameter should be name of keyword with main state procedure.
-${error_invalid_on_update_keyword_name}=    On update parameter should be name of keyword with transition procedure.
-${error_invalid_go_to_state_keyword_name}=    State parameter should be name of keyword.
-${error_invalid_name_of_created_state_machine}=    Sm parameter should be name of created state machine.
+${first_sm_name}   first_sm_name
+${second_sm_name}  second_sm_name
 
 
 *** Test Cases ***
-Test Create And Destroy State Machine
-    Create State Machine    name=simple-machine
 
-    Create State Machine    name=Other Machine
+Test Usage Of Single State Machine
+    Create State Machine  sm_name=${first_sm_name}
 
-    Run Keyword And Expect Error    ${error_invalid_state_machine_name}
-    ...    Create State Machine    name=${0}
+    Add State  state=Fake Source State  on_update=On Update Fake Source State
+    Add State  state=Fake Destination State  on_update=On Update Fake Destination State
+    Run Keyword And Expect Error  No keyword with name 'Keyword Not Exists' found.
+    ...                           Add State  state=Keyword Not Exists
+    ...                                      on_update=On Update Fake Source State
+    Run Keyword And Expect Error  No keyword with name 'On Update Keyword Not Exists' found.
+    ...                           Add State  state=Fake Source State
+    ...                                      on_update=On Update Keyword Not Exists
 
-    Run Keyword And Expect Error    ${error_invalid_state_machine_name}
-    ...    Create State Machine    name=${fake_list}
+    Go To State  Fake Source State
+    &{context}  Get Context
+    Should Be Equal  ${context['executed']}  source
+    Run Keyword And Expect Error  StateNotFoundError: State "Keyword Not Exists" was not added to "${first_sm_name}" state machine.
+    ...                           Go To State  Keyword Not Exists
+    Update Context  executed=null
+    &{context}  Get Context
+    Should Be Equal  ${context['executed']}  null
+    Go To State  Fake Source State
+    &{context}  Get Context
+    Should Be Equal  ${context['executed']}  source
 
-    Destroy State Machine    name=simple-machine
+    Run State Machine
 
-    Destroy State Machine    name=Other Machine
+    &{context}  Get Context
+    Should Be Equal  ${context['executed']}  destination
 
-    Run Keyword And Expect Error    ${error_invalid_state_machine_name}
-    ...    Destroy State Machine    name=${0}
-
-    Run Keyword And Expect Error    ${error_invalid_state_machine_name}
-    ...    Destroy State Machine    name=${fake_list}
-
-
-Test Add State to State Machine
-    [Setup]    Create State Machine    name=test-machine
-    Add State    state=Fake State    on_update=On Update Fake State    sm=test-machine
-
-    Run Keyword And Expect Error    ${error_invalid_state_machine_name}
-    ...    Add State    state=Fake State    on_update=On Update Fake State    sm=${0}
-
-    Run Keyword And Expect Error    ${error_invalid_run_keyword_name}
-    ...    Add State    state=${0}    on_update=On Update Fake State    sm=test-machine
-
-    Run Keyword And Expect Error    ${error_invalid_on_update_keyword_name}
-    ...    Add State    state=Fake State    on_update=${0}    sm=test-machine
-
-    Run Keyword And Expect Error    ${error_invalid_run_keyword_name}
-    ...    Add State    state=${fake_list}    on_update=On Update Fake State    sm=test-machine
-
-    Run Keyword And Expect Error    ${error_invalid_on_update_keyword_name}
-    ...    Add State    state=Fake State    on_update=${fake_list}    sm=test-machine
-
-    [Teardown]    Destroy State Machine    name=test-machine
+    Destroy State Machine  sm_name=${first_sm_name}
 
 
-Test Go To State
-    [Setup]    Run Keywords
-    ...        Create State Machine    name=test-machine    AND
-    ...        Add State    state=Fake State To Set Variable    on_update=On Update Fake State    sm=test-machine    AND
-    ...        Set Test Variable    ${go_to_keyword_success}    ${False}
+Test Usage Of Many State Machine
+    Create State Machine  sm_name=${first_sm_name}
+    Create State Machine  sm_name=${second_sm_name}
 
-    Go To State    state=Fake State To Set Variable    sm=test-machine
-    Should Be True    ${go_to_keyword_success}
+    Add State  state=Fake Source State
+    ...        on_update=On Update Fake Source State
+    ...        sm_name=${first_sm_name}
+    Add State  state=Fake Destination State
+    ...        on_update=On Update Fake Destination State
+    ...        sm_name=${first_sm_name}
+    Add State  state=Second Fake Source State
+    ...        on_update=On Update Second Fake Source State
+    ...        sm_name=${second_sm_name}
+    Add State  state=Second Fake Destination State
+    ...        on_update=On Update Second Fake Destination State
+    ...        sm_name=${second_sm_name}
+    ${msg}=  Catenate  DefaultStateMachineNotFoundError: There is more then one state machine in store. Indicate which state
+    ...                machine should be used e.g.: ... sm_name=name-of-sm ...
+    Run Keyword And Expect Error  ${msg}
+    ...                           Add State  state=Fake Source State
+    ...                                      on_update=On Update Fake Source State
 
-    Run Keyword And Expect Error    ${error_invalid_name_of_created_state_machine}
-    ...    Go To State    state=Fake State    sm=${0}
+    Update Context  state_invocation=${0}  sm_name=${second_sm_name}
+    Run State Machine  sm_name=${second_sm_name}  start_from=Second Fake Source State  max_updates=10
+    &{context}  Get Context  sm_name=${second_sm_name}
+    Should Be Equal  ${context.get('state_invocation')}  ${6}
 
-    Run Keyword And Expect Error    ${error_invalid_go_to_state_keyword_name}
-    ...    Go To State    state=${0}    sm=test-machine
+    &{context}  Get Context  sm_name=${first_sm_name}
+    Should Be Equal  ${context.get('executed')}  ${NONE}
 
-    [Teardown]    Destroy State Machine    name=test-machine
-
-
-Test Update State
-    [Setup]    Run Keywords
-    ...        Create State Machine    name=test-machine    AND
-    ...        Add State    state=Fake State    on_update=On Update Fake State To Set Variable    sm=test-machine    AND
-    ...        Add State    state=Fake State To Set Variable    on_update=On Update Fake State    sm=test-machine    AND
-    ...        Go To State    state=Fake State    sm=test-machine    AND
-    ...        Set Test Variable    ${on_update_keyword_success}    ${False}    AND
-    ...        Set Test Variable    ${go_to_keyword_success}    ${False}
-
-    Update State    sm=test-machine
-    Should Be True    ${go_to_keyword_success}
-    Should Be True    ${on_update_keyword_success}
-
-    Run Keyword And Expect Error    ${error_invalid_name_of_created_state_machine}
-    ...    Update State    sm=${0}
-
-    [Teardown]    Destroy State Machine    name=test-machine
-
-
-Test Context
-    [Setup]    Run Keywords
-    ...    Create State Machine    name=test-machine    AND
-    ...    Add State    state=Fake State With Context Update    
-    ...                 on_update=On Update Fake State With Context Update    sm=test-machine
-
-    &{context}=    Get Context  sm=test-machine
-    Run Keyword if    ${context} != &{EMPTY}    Fail    Context should be empty before adding any data.
-
-    Go To State    state=Fake State With Context Update    sm=test-machine
-    Update State    sm=test-machine
-
-    &{context}=    Get Context  sm=test-machine
-    Run Keyword if    '${context["fake_data"]}' != 'fake_data'    Fail    Context should contain added data.
-
-    &{new_context}=    Create Dictionary    a=a    b=b    c=c
-    Set Context    sm=test-machine    context=${new_context}
-
-    &{context}=    Get Context  sm=test-machine
-    Run Keyword if    ${context} != &{new_context}    Fail    Context was not overwritten.
+    @{simple_machine_states}=  Get State Machine States  sm_name=${first_sm_name}
+    ${number_of_states}=  Get Length  ${simple_machine_states}
+    Should Be Equal  ${number_of_states}  ${2}
 
 
 *** Keywords ***
-Fake State
+Fake Source State
+    Update Context  executed=source
+
+On Update Fake Source State
+    Go To State  Fake Destination State
+
+Fake Destination State
+    &{new_context}=  Create Dictionary  executed=destination
+    Set Context  ${new_context}
+
+On Update Fake Destination State
+    Stop State Machine
+
+Second Fake Source State
+    ${context}=  Get Context  sm_name=${second_sm_name}
+    Update Context  state_invocation=${context['state_invocation'] + 1}  sm_name=${second_sm_name}
+
+On Update Second Fake Source State
+    Go To State  Second Fake Destination State  sm_name=${second_sm_name}
+
+Second Fake Destination State
     No Operation
 
-On Update Fake State
-    No Operation
-
-Fake State To Set Variable
-    Set Test Variable    ${go_to_keyword_success}    ${True}
-
-On Update Fake State To Set Variable
-    Set Test Variable    ${on_update_keyword_success}    ${True}
-    Go To State    state=Fake State To Set Variable    sm=test-machine
-
-Fake State With Context Update
-    &{context_chunk}=    Create Dictionary    fake_data=fake_data
-    Update Context    sm=test-machine    item=${context_chunk}
-
-On Update Fake State With Context Update
-    No Operation
+On Update Second Fake Destination State
+    Go To State  Second Fake Source State  sm_name=${second_sm_name}
