@@ -11,6 +11,8 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+      - python/install-packages:
+          pkg-manager: pip
           pip-dependency-file: requirements/dev.txt
       - run:
           name: Run pylint
