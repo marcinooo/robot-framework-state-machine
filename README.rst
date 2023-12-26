@@ -2,8 +2,8 @@
 State Machine for Robot Framework
 =================================
 
-.. image:: https://circleci.com/gh/marcinooo/robot-framework-state-machine/tree/main.svg?style=svg
-    :target: https://circleci.com/gh/marcinooo/robot-framework-state-machine/?branch=main
+.. image:: https://dl.circleci.com/status-badge/img/circleci/3JrCXjEasrL8BZdxRCKxJQ/YSg52Sfx1SQvL1biCz4mrs/tree/main.svg?style=svg
+    :target: https://dl.circleci.com/status-badge/redirect/circleci/3JrCXjEasrL8BZdxRCKxJQ/YSg52Sfx1SQvL1biCz4mrs/tree/main
 
 |
 
