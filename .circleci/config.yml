@@ -1,6 +1,8 @@
 version: 2.1
+
 orbs:
   python: circleci/python@1.5.0
+
 jobs:
   build-and-test-py36:  &build-and-test-template
     docker:
@@ -35,6 +37,15 @@ jobs:
     <<: *build-and-test-template
     docker:
       - image: cimg/python:3.10
+  build-and-test-py311:
+    <<: *build-and-test-template
+    docker:
+      - image: cimg/python:3.11
+  build-and-test-py312:
+    <<: *build-and-test-template
+    docker:
+      - image: cimg/python:3.12
+
 workflows:
   test:
     jobs:
@@ -43,3 +54,5 @@ workflows:
       - build-and-test-py38
       - build-and-test-py39
       - build-and-test-py310
+      - build-and-test-py311
+      - build-and-test-py312

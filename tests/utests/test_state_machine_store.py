@@ -27,4 +27,5 @@ def test_add_state(state_machine_a, state_machine_b):
     store = StateMachineStore()
     store.add(state_machine_b.name, state_machine_b)
     store = StateMachineStore()
-    assert store.get(state_machine_a.name) is not None and store.get(state_machine_b.name) is not None
+    assert store.get(state_machine_a.name) is not None
+    assert store.get(state_machine_b.name) is not None
