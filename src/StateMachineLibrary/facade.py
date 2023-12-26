@@ -2,7 +2,7 @@
 Library facade.
 """
 
-from typing import Union, Any
+from typing import Union, Any, List, Dict
 from itertools import count
 from robot.api import logger
 from robot.libraries.BuiltIn import BuiltIn
@@ -77,7 +77,7 @@ class StateMachineFacade:
 
         logger.debug(f'State machine "{sm_instance.name}" was stopped.')
 
-    def get_state_machine_states(self, sm_name: Union[str, None] = None) -> list[str]:
+    def get_state_machine_states(self, sm_name: Union[str, None] = None) -> List[str]:
         """Gets list of states added to given state machine."""
 
         sm_instance = self._get_state_machine_from_store(sm_name)
@@ -125,13 +125,13 @@ class StateMachineFacade:
         sm_instance = self._get_state_machine_from_store(sm_name)
         sm_instance.update()
 
-    def get_context(self, sm_name: Union[str, None] = None) -> dict:
+    def get_context(self, sm_name: Union[str, None] = None) -> Dict:
         """Returns context for given state machine."""
 
         sm_instance = self._get_state_machine_from_store(sm_name)
         return sm_instance.context
 
-    def set_context(self, context: dict, sm_name: Union[str, None] = None) -> None:
+    def set_context(self, context: Dict, sm_name: Union[str, None] = None) -> None:
         """Overwrites context for given state machine."""
 
         if not is_dictionary(context):

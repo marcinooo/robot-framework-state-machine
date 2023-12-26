@@ -2,7 +2,7 @@
 Contains implementation of store to collect all state machines.
 """
 
-from typing import Union
+from typing import Union, Dict
 
 from .state_machine import StateMachine
 
@@ -49,7 +49,7 @@ class StateMachineStore:
 
         return self._STORE.pop(name, None)
 
-    def get_all(self) -> dict[str, StateMachine]:
+    def get_all(self) -> Dict[str, StateMachine]:
         """
         Returns all stored state machines.
 

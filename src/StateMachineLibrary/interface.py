@@ -2,7 +2,7 @@
 Library interface.
 """
 
-from typing import Union, Any
+from typing import Union, Any, List, Dict
 
 from .facade import StateMachineFacade
 
@@ -179,7 +179,7 @@ class StateMachineLibrary:
 
         self._facade.stop_state_machine(sm_name)
 
-    def get_state_machine_states(self, sm_name: Union[str, None] = None) -> list[str]:
+    def get_state_machine_states(self, sm_name: Union[str, None] = None) -> List[str]:
         """
         Gets list of states added to given state machine.
 
@@ -270,7 +270,7 @@ class StateMachineLibrary:
 
         self._facade.update_state(sm_name)
 
-    def get_context(self, sm_name: Union[str, None] = None) -> dict:
+    def get_context(self, sm_name: Union[str, None] = None) -> Dict:
         """
         Returns context for given state machine. Context is dictionary where you can store common resources
         for state machine.
@@ -291,7 +291,7 @@ class StateMachineLibrary:
 
         return self._facade.get_context(sm_name)
 
-    def set_context(self, context: dict, sm_name: Union[str, None] = None) -> None:
+    def set_context(self, context: Dict, sm_name: Union[str, None] = None) -> None:
         """
         Overwrites context for given state machine. All common resources for state machine will be overwritten.
 
