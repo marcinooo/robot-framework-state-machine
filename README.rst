@@ -25,8 +25,72 @@ to control or test software components which can be in many states.
 Documentation
 -------------
 
-It is a very simple library, so the documentation is included here. 
-For the inquisitive I recommend reading the docstrings in `file <https://github.com/marcinooo/robot-framework-state-machine/blob/develop/src/StateMachineLibrary/interface.py>`_.
+Library documentation can be found `here <>`_.
+
+A good starting point is to analyze examples:
+
+- `basic example <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/test_rest_api_of_led_controller>`_
+- `usage of library in python code <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/task_to_generate_data_transmission_report>`_
+- `usage of two state maschines <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/test_two_products_with_two_state_machines>`_
+
+
+Installation
+============
+
+Install from PyPI:
+
+``$ pip install robotframework-statemachinelibrary``
+
+Install from github:
+
+``$ pip install git+https://github.com/marcinooo/robot-framework-state-machine``
+
+
+Usage
+=====
+
+An example of using the library for LED blinking (of course, the library was created for more complex tasks :wink:).
+
+.. code:: robotframework
+
+    *** Settings ***
+    Library  StateMachineLibrary
+
+    *** Tasks ***
+    Blink
+        [setup]  Task Setup
+        Run State Machine  start_from=Turn On Light  max_updates=10
+
+    *** Keywords ***
+    Task Setup
+        Create State Machine  name=blink-machine
+        Add State  state=Turn On Light   on_update=On Update Turn On Light
+        Add State  state=Turn Off Light  on_update=On Update Turn Off Light
+
+    Turn On Light
+        Log To Console  I am ON
+
+    On Update Turn On Light
+        Sleep  0.25s
+        Go To State  state=Turn Off Light
+
+    Turn Off Light
+        Log To Console  I am OFF
+
+    On Update Turn Off Light
+        Sleep  0.25s
+        Go To State  state=Turn On Light
+
+
+Flow diagram:
+
+.. image:: https://raw.githubusercontent.com/marcinooo/robot-framework-state-machine/main/states_flow.png
+    :width: 760
+    :alt: Flow diagram for above code
+
+
+Overview
+--------
 
 First of all import the library:
 
@@ -46,7 +110,7 @@ Register keywords that should be executed in the given state (*Turn On Light*) a
 
 .. code:: robotframework
 
-    Add State  state=Turn On Light   on_update=On Update Turn On Light   sm=blink-machine
+    Add State  state=Turn On Light   on_update=On Update Turn On Light
 
 Both keywords must be defined:
 
@@ -55,24 +119,25 @@ Both keywords must be defined:
     *** Keywords ***
     # ...
     Turn On Light
-        # ...
+        # Here you can put logic (e.g.: led controller)
+        Log To Console  I am ON
 
     On Update Turn On Light
-        Go To State  state=Turn Off Light  sm=blink-machine
+        Go To State  state=Turn Off Light
 
 Keywords *On Update...* should indicate the next state:
 
 .. code:: robotframework
 
-    Go To State  state=Turn Off Light  sm=blink-machine
+    Go To State  state=Turn Off Light
 
-Call the same kewyord to enter the first state.
+Call the same keyword to enter the first state.
 
-Force transition to a new state:
+Force transition to a next state:
 
 .. code:: robotframework
 
-    Update State  sm=blink-machine
+    Update State
 
 You can pass data between states in **context** (recommended method) or using global variables.
 
@@ -80,71 +145,15 @@ You can pass data between states in **context** (recommended method) or using gl
 
     *** Keywords ***
     # ...
+
     Turn On Light
-        # ...
-        &{context_chunk}=    Create Dictionary    led_status=ON
-        Update Context    sm=blink-machine    item=${context_chunk}
+        Update Context  led_status=ON
 
     Turn Off Light
         # ...
-        &{context}=    Get Context  sm=blink-machine
+        &{context}=    Get Context
         Log To Console    LED is ${context["led_status"]}
 
-
-Usage
-=====
-
-An example of using the library for LED blinking (of course, the library was created for more complex tasks :wink:).
-
-.. code:: robotframework
-
-    *** Settings ***
-    Library  StateMachineLibrary
-
-    *** Tasks ***
-    Blink
-        [setup]  Task Setup
-        Go To State  state=Turn On Light  sm=blink-machine
-        Repeat Keyword  100 times  Update State  sm=blink-machine
-
-    *** Keywords ***
-    Task Setup
-        Create State Machine  name=blink-machine
-        Add State  state=Turn On Light   on_update=On Update Turn On Light   sm=blink-machine
-        Add State  state=Turn Off Light  on_update=On Update Turn Off Light  sm=blink-machine
-
-    Turn On Light
-        Log To Console  Turn On Light...
-    #    Sleep    0.5s    # if you have real led then you need this ;)
-
-    On Update Turn On Light
-        Go To State  state=Turn Off Light  sm=blink-machine
-
-    Turn Off Light
-        Log To Console  Turn Off Light...
-    #    Sleep    0.5s    # if you have real led then you need this ;)
-
-    On Update Turn Off Light
-        Go To State  state=Turn On Light   sm=blink-machine
-
-
-Flow diagram:
-
-.. image:: https://raw.githubusercontent.com/marcinooo/robot-framework-state-machine/main/states_flow.png
-    :width: 760
-    :alt: Flow diagram for above code
-
-
-Installation
-============
-
-Install from PyPI:
-
-``$ pip install robotframework-statemachinelibrary``
-
-Install from github:
-
-``$ pip install git+https://github.com/marcinooo/robot-framework-state-machine``
 
 License
 =======

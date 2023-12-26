@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+robotframework
+robotframework-statemachinelibrary
+robotframework-requests
