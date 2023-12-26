@@ -2,7 +2,7 @@
 State Machine for Robot Framework
 =================================
 
-.. image:: https://dl.circleci.com/status-badge/img/circleci/3JrCXjEasrL8BZdxRCKxJQ/YSg52Sfx1SQvL1biCz4mrs/tree/main.svg?style=svg
+.. image:: https://dl.circleci.com/status-badge/img/circleci/3JrCXjEasrL8BZdxRCKxJQ/YSg52Sfx1SQvL1biCz4mrs/tree/main.svg?style=svg&circle-token=13856206758f8d177d8e025861e0cef2b419fb51
     :target: https://dl.circleci.com/status-badge/redirect/circleci/3JrCXjEasrL8BZdxRCKxJQ/YSg52Sfx1SQvL1biCz4mrs/tree/main
 
 |

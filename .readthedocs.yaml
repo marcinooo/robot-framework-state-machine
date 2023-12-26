@@ -6,4 +6,4 @@ build:
     python: "3.12"
   commands:
     - python -m pip install -r requirements/dev.txt
-    - python docs/libdoc.py --output $READTHEDOCS_OUTPUT/html/ src/StateMachineLibrary
+    - python docs/libdoc.py src/StateMachineLibrary $READTHEDOCS_OUTPUT/html/index.html
