@@ -1,0 +1,32 @@
+[project]
+name = "robotframework-statemachinelibrary"
+dynamic = [ "version" ]
+authors = [
+    { name = "marcinooo" }
+]
+description = "Robot Framework State Machine Library"
+readme = "README.rst"
+license = { file = "LICENSE.txt" }
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "robotframework"
+]
+
+[project.urls]
+Homepage = "https://github.com/marcinooo/robot-framework-state-machine"
+Issues = "https://github.com/marcinooo/robot-framework-state-machine/issues"
+
+[build-system]
+requires = [ "setuptools>=61.0" ]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = [ "src" ]
+
+[tool.setuptools.dynamic]
+version = {attr = "StateMachineLibrary.__version__"}

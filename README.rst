@@ -25,13 +25,13 @@ to control or test software components which can be in many states.
 Documentation
 -------------
 
-Library documentation can be found `here <>`_.
+Library documentation can be found `here <https://robot-framework-state-machine.readthedocs.io/en/latest/>`_.
 
-A good starting point is to analyze examples:
+A good starting point is to check examples:
 
 - `basic example <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/test_rest_api_of_led_controller>`_
 - `usage of library in python code <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/task_to_generate_data_transmission_report>`_
-- `usage of two state maschines <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/test_two_products_with_two_state_machines>`_
+- `usage of two state machines <https://github.com/marcinooo/robot-framework-state-machine/blob/master/examples/test_two_products_with_two_state_machines>`_
 
 
 Installation
